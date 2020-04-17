@@ -77,19 +77,21 @@ function App() {
           </div>
           <div className="date">{dateBuilder(new Date())}</div>
           <div className="weather-box">
+            <div className="weather">
+              {weather.weather[0].main} 
+              <img 
+                className="icon-image"
+                src = {"http://openweathermap.org/img/w/"+ weather.weather[0].icon + ".png" }>
+              </img>
+            </div>
             <div className="temp">
               {weather.main.temp}°c
             </div>
             <div className="minmax">
-              Lowest:{weather.main.temp_min}°c Highest:{weather.main.temp_max}°c
-              <img src="${api.icon} + weather.weather[0].icon + '.png'"></img>
-            </div>
-            <div className="weather">
-              {weather.weather[0].main}
-              
+              {weather.main.temp_min}°c ~ {weather.main.temp_max}°c
             </div>
             <div className="humidity">
-              humidity: {weather.main.humidity}%
+              humidity: {weather.main.humidity}% wind: {weather.wind.speed}m/s
             </div>
           </div>
           <div className="future-box">
@@ -98,28 +100,33 @@ function App() {
                 <tr>
                   <td>{forecast.list[0].dt_txt}</td>
                   <td>{forecast.list[0].weather[0].main}</td>
+                  <td> <img src = {"http://openweathermap.org/img/w/"+ forecast.list[0].weather[0].icon + ".png" }></img></td>
                   <td>{forecast.list[0].main.temp}&deg;c</td>
                 </tr>
                 <tr>
                   <td>{forecast.list[8].dt_txt}</td>
                   <td>{forecast.list[8].weather[0].main}</td>
+                  <td> <img src = {"http://openweathermap.org/img/w/"+ forecast.list[8].weather[0].icon + ".png" }></img></td>
                   <td>{forecast.list[8].main.temp}&deg;c</td>
                 </tr>
                 <tr>
                   <td>{forecast.list[16].dt_txt}</td>
                   <td>{forecast.list[16].weather[0].main}</td>
+                  <td> <img src = {"http://openweathermap.org/img/w/"+ forecast.list[16].weather[0].icon + ".png" }></img></td>
                   <td>{forecast.list[16].main.temp}&deg;c</td>
                 </tr>
                 <tr>
                   <td>{forecast.list[24].dt_txt}</td>
                   <td>{forecast.list[24].weather[0].main}</td>
+                  <td> <img src = {"http://openweathermap.org/img/w/"+ forecast.list[24].weather[0].icon + ".png" }></img></td>
                   <td>{forecast.list[24].main.temp}&deg;c</td>
                   </tr>
-                  <tr>
-                    <td>{forecast.list[32].dt_txt}</td>
-                    <td>{forecast.list[32].weather[0].main}</td>
-                    <td>{forecast.list[32].main.temp}°c</td>
-                  </tr>
+                <tr>
+                  <td>{forecast.list[32].dt_txt}</td>
+                  <td>{forecast.list[32].weather[0].main}</td>
+                  <td> <img src = {"http://openweathermap.org/img/w/"+ forecast.list[32].weather[0].icon + ".png" }></img></td>
+                  <td>{forecast.list[32].main.temp}&deg;c</td>
+                </tr>
                 </tbody>
               </table>
           </div>
