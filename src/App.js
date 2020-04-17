@@ -10,25 +10,23 @@ function App() {
   const [weather, setWeather] = useState({});
   const [forecast, setForecast] = useState({});
 
-  function search() {
-    fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+  window.onload = function(){  
+    search("Raleigh");
+    future("Raleigh");
+  }; 
+
+  function search(a) {
+    fetch(`${api.base}weather?q=${a}&units=metric&APPID=${api.key}`)
     .then(res => res.json())
     .then(result => {
       setWeather(result);
       setQuery('');
       console.log(result);
-    }) 
-      // fetch(`${api.base}forecast?q=${query}&units=metric&APPID=${api.key}`)
-      //    .then(res => res.json())
-      //    .then(result => {
-      //      setForecast(result);
-      //      setQuery('');
-      //      console.log(result);
-      //    })     
+    })   
   }  
 
-  function future() {
-    fetch(`${api.base}forecast?q=${query}&units=metric&APPID=${api.key}`)
+  function future(a) {
+    fetch(`${api.base}forecast?q=${a}&units=metric&APPID=${api.key}`)
     .then(foreres => foreres.json())
     .then(foreresult => {
       setForecast(foreresult);
@@ -36,13 +34,6 @@ function App() {
       console.log(foreresult);
     })  
   }  
-
-  const handleClick = evt => {
-    if(evt.key === "Enter") {
-      // search();
-      future();
-    }
-  }
 
   const dateBuilder = (d) => {
     let months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
@@ -55,6 +46,8 @@ function App() {
 
     return `${month} ${date}, ${year} (${day})`
   }
+
+  
   return (
     <div className="app">
       <main>
@@ -67,37 +60,39 @@ function App() {
             onChange={e => setQuery(e.target.value)}
             value={query}
           />
-          <a href="#" 
+          <button 
+            className="change-button"
             onChange={e => setQuery(e.target.value)}
             value={query}
-            onClick={() => { search(); future();}}>Change
-          </a>
-
+            onClick={() => { search(query); future(query);}}
+            >
+            Change city
+          </button>
         </div>
-        {/* {(typeof weather.main !== "undefined" && forecast.list !== "undefined") ? ( */}
-        {(typeof forecast.list != "undefined") ? (
+        {/* {(typeof weather.main !== "undefined" || forecast.list !== "undefined") ? ( */}
+        {(typeof forecast.list !== "undefined") ? (
         <div className="location-box">
           <div className="location">
-            {/* {weather.name},{weather.sys.country} */}
+            {weather.name},{weather.sys.country}
           </div>
           <div className="date">{dateBuilder(new Date())}</div>
           <div className="weather-box">
             <div className="temp">
-              {/* {weather.main.temp}°c */}
+              {weather.main.temp}°c
             </div>
             <div className="minmax">
-              {/* Lowest:{weather.main.temp_min}°c Highest:{weather.main.temp_max}°c */}
+              Lowest:{weather.main.temp_min}°c Highest:{weather.main.temp_max}°c
+              <img src="${api.icon} + weather.weather[0].icon + '.png'"></img>
             </div>
             <div className="weather">
-              {/* {weather.weather[0].main} */}
-              {/* <img src="${api.icon} + weather.weather[0].icon + '.png'"></img> */}
+              {weather.weather[0].main}
+              
             </div>
             <div className="humidity">
               humidity: {weather.main.humidity}%
             </div>
           </div>
           <div className="future-box">
-            {/* {weather.coord.lon} */}
             <table className="forecast-table">
               <tbody>
                 <tr>
@@ -130,33 +125,9 @@ function App() {
           </div>
         </div>
         ) : (
-          <div className="location-box">
-          <div className="location"> Raleigh, US
+          <div className="error-message">
+             City not found!
           </div>
-          <div className="date">{dateBuilder(new Date())}</div>
-          <div className="weather-box">
-            <div className="temp">
-              15°c
-            </div>
-            <div className="minmax">
-              Lowest:5°c Highest:15°c
-            </div>
-            <div className="weather">
-              Sunny
-            </div>
-            <div className="humidity">
-              60%
-            </div>
-          </div>
-          <div className="future-box">
-            {/* {forecast.cnt}  */}
-            {/* {forecast[0].main.temp} */}
-            Table 1 8 16 24 32 40
-            dt_txt: weather, temp, humidity
-          </div>
-          
-        
-        </div>
         )}
       </main>
     </div>
