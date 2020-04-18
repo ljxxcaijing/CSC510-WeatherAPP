@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+
 const api = {
   key: "332dd44ef28eaf0c70a35fdac6e4194f",
   base: "https://api.openweathermap.org/data/2.5/",
@@ -9,7 +12,6 @@ function App() {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
   const [forecast, setForecast] = useState({});
-
   window.onload = function(){  
     search("Raleigh");
     future("Raleigh");
@@ -34,6 +36,26 @@ function App() {
       console.log(foreresult);
     })  
   }  
+
+  function rAct(a,b,c){
+    if (a == "Clear" && c>30 ) return "The weather is good and it is suitable for various sports, but due to the high temperature, please avoid sunburn when exercising outdoors."
+    else if (a == "Clear" && c>18) return "It is such a nice day. You can choose outdoor activities such as playing basketball."
+    else if ((a == "Clear" || a =="Clouds") && b<10) return "The weather is suitable for outdoor sports, but please be careful of low temperatures."
+    else if (a == "Clouds") return "It is not sunny but you can still go oustide and do sports. "
+    else if (a == "Rain" || a == "Drizzle") return "It is rainning. Better do indoor activities such as watching a film"
+    else return "The weather is bad. You should stay inside or choose indoor activities such as playing poker games."
+  }
+  
+  function rDrink(a,b){
+    
+    
+    var teas=["Bumble tea", "Fruit tea", "Milk Tea"];
+      if(b>=28) return "The weather is hot. Let's get some cold drinks like ice cold coke."
+      else if ( a <= 10) return "It is cold. Better warm yourself with a cup of hot chocolate."
+      else if (b>25) return "The weather is a little hot. Why not having a cup of "+teas[1]+"?"
+      else if (a<15) return "The weather is a little cold. Why not having a cup of "+teas[0]+"?"
+      else return "The weather is fine. Why not having a cup of "+teas[2]+"?"
+  }
 
   const dateBuilder = (d) => {
     let months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
@@ -93,6 +115,20 @@ function App() {
             <div className="humidity">
               humidity: {weather.main.humidity}% wind: {weather.wind.speed}m/s
             </div>
+          </div>
+          <div className="recommendation">
+                      <Tabs>
+                <TabList>
+                  <Tab>Suggested Drinks</Tab>
+                  <Tab>Suggested Activities</Tab>
+                </TabList>
+                <TabPanel>
+                  <h2>{rDrink(weather.main.temp_min,weather.main.temp_max)}</h2>
+                </TabPanel>
+                <TabPanel>
+                  <h2>{rAct(weather.weather[0].main,weather.main.temp_min,weather.main.temp_max)}</h2>
+                </TabPanel>
+              </Tabs>
           </div>
           <div className="future-box">
             <table className="forecast-table">
