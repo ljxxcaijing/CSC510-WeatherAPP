@@ -138,30 +138,35 @@ function App() {
                   <td>{forecast.list[0].weather[0].main}</td>
                   <td> <img src = {"http://openweathermap.org/img/w/"+ forecast.list[0].weather[0].icon + ".png" }></img></td>
                   <td>{forecast.list[0].main.temp}&deg;c</td>
+                  <td>{forecast.list[0].main.humidity}%</td>
                 </tr>
                 <tr>
                   <td>{forecast.list[8].dt_txt}</td>
                   <td>{forecast.list[8].weather[0].main}</td>
                   <td> <img src = {"http://openweathermap.org/img/w/"+ forecast.list[8].weather[0].icon + ".png" }></img></td>
                   <td>{forecast.list[8].main.temp}&deg;c</td>
+                  <td>{forecast.list[8].main.humidity}%</td>
                 </tr>
                 <tr>
                   <td>{forecast.list[16].dt_txt}</td>
                   <td>{forecast.list[16].weather[0].main}</td>
                   <td> <img src = {"http://openweathermap.org/img/w/"+ forecast.list[16].weather[0].icon + ".png" }></img></td>
                   <td>{forecast.list[16].main.temp}&deg;c</td>
+                  <td>{forecast.list[16].main.humidity}%</td>
                 </tr>
                 <tr>
                   <td>{forecast.list[24].dt_txt}</td>
                   <td>{forecast.list[24].weather[0].main}</td>
                   <td> <img src = {"http://openweathermap.org/img/w/"+ forecast.list[24].weather[0].icon + ".png" }></img></td>
                   <td>{forecast.list[24].main.temp}&deg;c</td>
+                  <td>{forecast.list[24].main.humidity}%</td>
                   </tr>
                 <tr>
                   <td>{forecast.list[32].dt_txt}</td>
                   <td>{forecast.list[32].weather[0].main}</td>
                   <td> <img src = {"http://openweathermap.org/img/w/"+ forecast.list[32].weather[0].icon + ".png" }></img></td>
                   <td>{forecast.list[32].main.temp}&deg;c</td>
+                  <td>{forecast.list[32].main.humidity}%</td>
                 </tr>
                 </tbody>
               </table>
