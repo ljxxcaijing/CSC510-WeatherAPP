@@ -57,6 +57,91 @@ function App() {
       else return "The weather is fine. Why not having a cup of "+teas[2]+"?"
   }
 
+  function rWater(temp, humidity, weather, windspeed){
+    var s = ""
+    if (windspeed > 10){
+      s = s + "It's windy outside. Bring your plants back home! "
+      
+    }
+    else{
+      if (weather == "Drizzle" || weather == "Rain"){
+        s = s + "It's raining outside. You can put your plants outside for watering. "
+      }
+      else if (humidity > 80){
+        s = s + "It's gonna rain outside. You can put your plant outside for watering. "
+      }
+    }
+
+    if (weather != "Drizzle" && weather != "Rain" && humidity < 80){
+      if (temp > 30){
+        s = s + "It's hot! Please give more water to your plants! "  
+      }
+      else if (temp < 5){
+        s = s + "It's cold! Don't let your plants frost! "
+      }
+      else{
+        s = s + "Please watering the plants as usual. "
+      }
+    }
+
+    return s
+  }
+ 
+  function rClothes(temp, temp_min, temp_max, humidity, weather, windspeed){
+    var Clothes = ["T-shirt", "Long-sleeved shirts", "windbreaker", "coat", "sweater", "sweatshirts", "jacket"]
+    var Pants = ["shorts", "jeans", "pants", "joggers"]
+    var s = ""
+    const rain = "It's raining outside! Better to carry an umbrella or a raincoat with you. "
+    const gonnaRain = "It's gonna raining outside! Better to carry an umbrella or a raincoat with you. "
+    const snow = "It's snowing! Wear gloves and play outside! "
+    const tempLow = "The weather is cold. Remember to wear a " + Clothes[3] + " and " + Clothes[4] + ". "
+    const tempHigh = "The weather is hot. It's better to wear " + Clothes[0] + " and " + Pants[0] + ". "
+    const tempMid = "The weather is moderate. You can pick clothes from " + Clothes[1] + ", " + Clothes[5] + ", " + Clothes[6] + ", and pick pants from " + Pants[1] + ", " + Pants[2] + ", " + Pants[3] + ". "
+    const tempMax = "The weather gonna be hot. Remember to dress less inside. "
+    const tempMin = "The weather gonna be cold. Remember to bring " + Clothes[3] + " or " + Clothes[6] + ". "
+    
+    if (weather == "Thunderstorm" || weather == "Drizzle" || weather == "Rain"){
+      s = s + rain
+    }
+    else if (weather == "Snow"){
+      s = s + snow
+    }
+    else if (humidity > 80){
+      s = s + gonnaRain
+    }
+ 
+    if (temp < 10){
+      s = s + tempLow
+      if (temp_max > 25){
+        s = s + tempMax
+      }
+    }
+    else if (temp > 25){
+      s = s + tempHigh
+      if (tempMin < 10){
+        s = s + tempMin
+      }
+    }
+    else{
+      s = s + tempMid 
+      if (tempMin < 10){
+        s = s + tempMin
+      }
+      else if (temp_max > 25){
+        s = s + tempMax
+      }
+    }  
+ 
+    if (windspeed > 10){
+      s = s + "Wait! It's windy outside! Remember to bring a " + Clothes[2] + " with you! "
+    }
+ 
+    return s
+  }
+ 
+
+
+
   const dateBuilder = (d) => {
     let months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
     let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -117,16 +202,24 @@ function App() {
             </div>
           </div>
           <div className="recommendation">
-                      <Tabs>
+              <Tabs>
                 <TabList>
                   <Tab>Suggested Drinks</Tab>
                   <Tab>Suggested Activities</Tab>
+                  <Tab>Suggested Clothes</Tab>
+                  <Tab>Plants Care Tips</Tab>
                 </TabList>
                 <TabPanel>
-                  <h2>{rDrink(weather.main.temp_min,weather.main.temp_max)}</h2>
+                  <h3>{rDrink(weather.main.temp_min,weather.main.temp_max)}</h3>
                 </TabPanel>
                 <TabPanel>
-                  <h2>{rAct(weather.weather[0].main,weather.main.temp_min,weather.main.temp_max)}</h2>
+                  <h3>{rAct(weather.weather[0].main,weather.main.temp_min,weather.main.temp_max)}</h3>
+                </TabPanel>
+                <TabPanel>
+                  <h3>{rClothes(weather.main.temp, weather.main.temp_min, weather.main.temp_max, weather.main.humidity, weather.weather[0].main, weather.wind.speed)}</h3>
+                </TabPanel>
+                <TabPanel>
+                  <h3>{rWater(weather.main.temp, weather.main.temp_min, weather.main.temp_max, weather.main.humidity, weather.weather[0].main, weather.wind.speed)}</h3>
                 </TabPanel>
               </Tabs>
           </div>
