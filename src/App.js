@@ -4,7 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import Alert from 'react-bootstrap/Alert'
 
 const api = {
-  key: "332dd44ef28eaf0c70a35fdac6e4194f",
+  key: "2400346506965959227ea9b92cfa15d2",
   base: "https://api.openweathermap.org/data/2.5/",
   icon: "https://openweathermap.org/img/w/"
 }
@@ -14,12 +14,58 @@ function App() {
   const [weather, setWeather] = useState({});
   const [forecast, setForecast] = useState({});
 
-  window.onload = function () {
-    search("Raleigh");
-    future("Raleigh");
-  };
+  addEventLoad(getPosition);
+
+  function addEventLoad(func){
+    var oldOnload = window.onload;
+    if(typeof window.onload != 'function'){
+      window.onload = func;
+    }else{
+      window.onload = function(){
+        oldOnload();
+        func();
+      }
+    } 
+  }
+
+  function getPosition() {
+    {navigator.geolocation.getCurrentPosition(
+      position => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        initSearch(latitude, longitude);
+        initFuture(latitude, longitude);
+      }, failure => {
+      if (failure.message.startsWith("Only secure origins are allowed")) {
+        console.log(failure.message);
+      }})
+    }
+  }
+
+  function initSearch(lat, lon) {
+    fetch(`${api.base}weather?lat=${lat}&lon=${lon}&units=metric&APPID=${api.key}`)
+    // fetch(`${api.base}weather?q=${a}&units=metric&APPID=${api.key}`)
+      .then(res => res.json())
+      .then(result => {
+        setWeather(result);
+        setQuery('');
+        console.log(result);
+      })
+  }
+
+  function initFuture(lat, lon) {
+    fetch(`${api.base}forecast?lat=${lat}&lon=${lon}&units=metric&APPID=${api.key}`)
+    // fetch(`${api.base}forecast?q=${a}&units=metric&APPID=${api.key}`)
+      .then(foreres => foreres.json())
+      .then(foreresult => {
+        setForecast(foreresult);
+        setQuery('');
+        console.log(foreresult);
+      })
+  }
 
   function search(a) {
+    // fetch(`${api.base}weather?lat=${lat}&lon=${lon}&units=metric&APPID=${api.key}`)
     fetch(`${api.base}weather?q=${a}&units=metric&APPID=${api.key}`)
       .then(res => res.json())
       .then(result => {
@@ -30,6 +76,7 @@ function App() {
   }
 
   function future(a) {
+    // fetch(`${api.base}forecast?lat=${a}&lon=${b}&units=metric&APPID=${api.key}`)
     fetch(`${api.base}forecast?q=${a}&units=metric&APPID=${api.key}`)
       .then(foreres => foreres.json())
       .then(foreresult => {
@@ -49,8 +96,6 @@ function App() {
   }
 
   function rDrink(a, b) {
-
-
     var teas = ["Bumble tea", "Fruit tea", "Milk Tea"];
     if (b >= 28) return "The weather is hot. Let's get some cold drinks like ice cold coke."
     else if (a <= 10) return "It is cold. Better warm yourself with a cup of hot chocolate."
@@ -181,16 +226,6 @@ function App() {
   return (
     <div className="app">
       <main>
-        {/* {navigator.geolocation.getCurrentPosition(
-          position => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-        }, failure => {
-          if (failure.message.startsWith("Only secure origins are allowed")) {
-            console.log(failure.message);
-          }})
-        }
-           */}
       <div className="search-box">
         <input
           type="text"
@@ -202,7 +237,7 @@ function App() {
         />
         <button
           className="change-button"
-          onChange={e => setQuery(e.target.value)}
+          // onChange={e => setQuery(e.target.value)}
           value={query}
           onClick={() => { search(query); future(query); }}
         >
