@@ -255,7 +255,7 @@ function App() {
                   <h3>{rClothes(weather.main.temp, weather.main.temp_min, weather.main.temp_max, weather.main.humidity, weather.weather[0].main, weather.wind.speed)}</h3>
                 </TabPanel>
                 <TabPanel>
-                  <h3>{rWater(weather.main.temp, weather.main.temp_min, weather.main.temp_max, weather.main.humidity, weather.weather[0].main, weather.wind.speed)}</h3>
+                  <h3>{rWater(weather.main.temp, weather.main.humidity, weather.weather[0].main, weather.wind.speed)}</h3>
                 </TabPanel>
               </Tabs>
             </div>
