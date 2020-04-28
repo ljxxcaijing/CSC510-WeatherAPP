@@ -87,11 +87,11 @@ function App() {
   }
 
   function rAct(a, b, c) {
-    if (a == "Clear" && c > 30) return "The weather is good and it is suitable for various sports, but due to the high temperature, please avoid sunburn when exercising outdoors."
-    else if (a == "Clear" && c > 18) return "It is such a nice day. You can choose outdoor activities such as playing basketball."
-    else if ((a == "Clear" || a == "Clouds") && b < 10) return "The weather is suitable for outdoor sports, but please be careful of low temperatures."
-    else if (a == "Clouds") return "It is not sunny but you can still go oustide and do sports. "
-    else if (a == "Rain" || a == "Drizzle") return "It is rainning. Better do indoor activities such as watching a film"
+    if (a === "Clear" && c > 30) return "The weather is good and it is suitable for various sports, but due to the high temperature, please avoid sunburn when exercising outdoors."
+    else if (a === "Clear" && c > 18) return "It is such a nice day. You can choose outdoor activities such as playing basketball."
+    else if ((a === "Clear" || a === "Clouds") && b < 10) return "The weather is suitable for outdoor sports, but please be careful of low temperatures."
+    else if (a === "Clouds") return "It is not sunny but you can still go oustide and do sports. "
+    else if (a === "Rain" || a === "Drizzle") return "It is rainning. Better do indoor activities such as watching a film"
     else return "The weather is bad. You should stay inside or choose indoor activities such as playing poker games."
   }
 
@@ -111,15 +111,15 @@ function App() {
 
     }
     else {
-      if (weather == "Drizzle" || weather == "Rain") {
+      if (weather === "Drizzle" || weather === "Rain") {
         s = s + "It's raining outside. You can put your plants outside for watering. "
       }
-      else if (humidity > 80) {
+      else if (humidity > 80 && weather !== "Snow") {
         s = s + "It's gonna rain outside. You can put your plant outside for watering. "
       }
     }
 
-    if (weather != "Drizzle" && weather != "Rain" && humidity < 80) {
+    if (weather !== "Drizzle" && weather !== "Rain") {
       if (temp > 30) {
         s = s + "It's hot! Please give more water to your plants! "
       }
@@ -147,10 +147,10 @@ function App() {
     const tempMax = "The weather gonna be hot. Remember to dress less inside. "
     const tempMin = "The weather gonna be cold. Remember to bring " + Clothes[3] + " or " + Clothes[6] + ". "
 
-    if (weather == "Thunderstorm" || weather == "Drizzle" || weather == "Rain") {
+    if (weather === "Thunderstorm" || weather === "Drizzle" || weather === "Rain") {
       s = s + rain
     }
-    else if (weather == "Snow") {
+    else if (weather === "Snow") {
       s = s + snow
     }
     else if (humidity > 80) {
